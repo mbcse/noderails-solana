@@ -1,0 +1,13 @@
+node_modules/
+.pnpm-store/
+.env
+.env.*
+.DS_Store
+dist/
+build/
+.next/
+.turbo/
+target/
+.anchor/
+Pods/
+*.log
