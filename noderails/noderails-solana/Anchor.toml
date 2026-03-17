@@ -1,0 +1,23 @@
+[toolchain]
+anchor_version = "1.0.2"
+
+[features]
+resolution = true
+skip-lint = false
+
+[programs.devnet]
+noderails_escrow = "ErG2kE3uhKxkBympZytSjvxGik7aSigvpeDAxC9gcT6Y"
+noderails_merchant_manager = "GKiurKP2ELeBXxjvXncvLzHpUyHVzBvWzuzm1f2i4KUz"
+
+[programs.localnet]
+noderails_escrow = "ErG2kE3uhKxkBympZytSjvxGik7aSigvpeDAxC9gcT6Y"
+noderails_merchant_manager = "GKiurKP2ELeBXxjvXncvLzHpUyHVzBvWzuzm1f2i4KUz"
+
+[provider]
+cluster = "devnet"
+wallet = "../solana/noderails/devnet-wallet.json"
+
+[scripts]
+test = "pnpm run test:mocha"
+
+[hooks]
