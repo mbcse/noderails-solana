@@ -1,0 +1,15 @@
+node_modules
+.git
+.turbo
+**/.turbo
+**/dist
+**/.next
+**/coverage
+**/*.log
+.env
+.env.*
+!.env.example
+# Backend image excludes apps via Dockerfile copy list; shrinking context avoids upload waste.
+apps
+enclaves
+**/.DS_Store
