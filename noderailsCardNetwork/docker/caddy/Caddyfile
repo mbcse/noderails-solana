@@ -1,0 +1,6 @@
+# Hostname from the caddy service environment (e.g. API_DOMAIN=api.wallcard.example.com).
+# DNS for that name must point at this host before TLS can succeed.
+{$API_DOMAIN} {
+	encode gzip zstd
+	reverse_proxy backend:9080
+}

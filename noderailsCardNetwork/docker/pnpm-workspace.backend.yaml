@@ -1,0 +1,14 @@
+# Used only inside `services/api/Dockerfile`: backend image must not enumerate `apps/*` or `enclaves/*`,
+# or `pnpm install` pulls hundreds of unrelated packages (Expo/React Native/etc.) and OOM‑kills tiny builders.
+
+packages:
+  - "packages/common"
+  - "packages/chain"
+  - "packages/crypto"
+  - "packages/database"
+  - "packages/queue"
+  - "packages/redis"
+  - "packages/service-base"
+  - "services/api"
+  - "services/signer-host"
+  - "services/worker"
