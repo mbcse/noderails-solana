@@ -1,0 +1,23 @@
+[package]
+name = "noderails_escrow"
+version = "0.1.0"
+description = "NodeRails payment escrow (Solana / Anchor)"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "noderails_escrow"
+
+[features]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+cpi = ["no-entrypoint"]
+default = []
+idl-build = ["anchor-lang/idl-build", "anchor-spl/idl-build"]
+
+[dependencies]
+anchor-lang = { version = "1.0.2", features = ["init-if-needed"] }
+anchor-spl = "1.0.2"
+solana-instructions-sysvar = "3.0.0"
+solana-sdk-ids = "3.1.0"
