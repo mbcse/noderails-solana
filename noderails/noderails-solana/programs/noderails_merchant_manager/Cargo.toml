@@ -1,0 +1,22 @@
+[package]
+name = "noderails_merchant_manager"
+version = "0.1.0"
+description = "NodeRails merchant payout manager (Solana / Anchor); mirrors NodeRailsMerchantManager.sol"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "noderails_merchant_manager"
+
+[features]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+cpi = ["no-entrypoint"]
+default = []
+idl-build = ["anchor-lang/idl-build", "anchor-spl/idl-build"]
+
+[dependencies]
+anchor-lang = "1.0.2"
+anchor-spl = "1.0.2"
+ed25519-dalek = { version = "1.0.1", default-features = false, features = ["u64_backend"] }
