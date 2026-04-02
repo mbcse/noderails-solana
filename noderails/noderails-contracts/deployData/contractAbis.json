@@ -1,0 +1,3988 @@
+{
+  "11155111": {
+    "NodeRailsEscrow": [
+      {
+        "type": "constructor",
+        "inputs": [
+          {
+            "name": "_superAdmin",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "_admins",
+            "type": "address[]",
+            "internalType": "address[]"
+          },
+          {
+            "name": "_feeRecipient",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "receive",
+        "stateMutability": "payable"
+      },
+      {
+        "type": "function",
+        "name": "MAX_FEE_BPS",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint16",
+            "internalType": "uint16"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "captureERC20Payment",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "merchant",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "token",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "payer",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "feeBps",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "timelocks",
+            "type": "uint256",
+            "internalType": "Timelocks"
+          },
+          {
+            "name": "permitData",
+            "type": "tuple",
+            "internalType": "struct INodeRailsEscrow.PermitData",
+            "components": [
+              {
+                "name": "amount",
+                "type": "uint256",
+                "internalType": "uint256"
+              },
+              {
+                "name": "deadline",
+                "type": "uint256",
+                "internalType": "uint256"
+              },
+              {
+                "name": "v",
+                "type": "uint8",
+                "internalType": "uint8"
+              },
+              {
+                "name": "r",
+                "type": "bytes32",
+                "internalType": "bytes32"
+              },
+              {
+                "name": "s",
+                "type": "bytes32",
+                "internalType": "bytes32"
+              }
+            ]
+          },
+          {
+            "name": "noderailsSignature",
+            "type": "bytes",
+            "internalType": "bytes"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "captureNativePayment",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "merchant",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "feeBps",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "timelocks",
+            "type": "uint256",
+            "internalType": "Timelocks"
+          },
+          {
+            "name": "noderailsSignature",
+            "type": "bytes",
+            "internalType": "bytes"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "payable"
+      },
+      {
+        "type": "function",
+        "name": "domainSeparator",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "eip712Domain",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "fields",
+            "type": "bytes1",
+            "internalType": "bytes1"
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "internalType": "string"
+          },
+          {
+            "name": "version",
+            "type": "string",
+            "internalType": "string"
+          },
+          {
+            "name": "chainId",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "verifyingContract",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "salt",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "extensions",
+            "type": "uint256[]",
+            "internalType": "uint256[]"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "emergencyWithdraw",
+        "inputs": [
+          {
+            "name": "token",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "to",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "feeRecipient",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "fullStop",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "fullStopped",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "getKeyRole",
+        "inputs": [
+          {
+            "name": "key",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint8",
+            "internalType": "enum INodeRailsEscrow.KeyRole"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "getPayment",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "tuple",
+            "internalType": "struct INodeRailsEscrow.Payment",
+            "components": [
+              {
+                "name": "merchant",
+                "type": "address",
+                "internalType": "address"
+              },
+              {
+                "name": "payer",
+                "type": "address",
+                "internalType": "address"
+              },
+              {
+                "name": "token",
+                "type": "address",
+                "internalType": "address"
+              },
+              {
+                "name": "amount",
+                "type": "uint256",
+                "internalType": "uint256"
+              },
+              {
+                "name": "feeBps",
+                "type": "uint16",
+                "internalType": "uint16"
+              },
+              {
+                "name": "status",
+                "type": "uint8",
+                "internalType": "enum INodeRailsEscrow.PaymentStatus"
+              },
+              {
+                "name": "timelocks",
+                "type": "uint256",
+                "internalType": "Timelocks"
+              }
+            ]
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "initiateDispute",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "isFullStopped",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "keyRoles",
+        "inputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint8",
+            "internalType": "enum INodeRailsEscrow.KeyRole"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "liftFullStop",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "pause",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "paused",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "payments",
+        "inputs": [
+          {
+            "name": "",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "merchant",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "payer",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "token",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "feeBps",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "status",
+            "type": "uint8",
+            "internalType": "enum INodeRailsEscrow.PaymentStatus"
+          },
+          {
+            "name": "timelocks",
+            "type": "uint256",
+            "internalType": "Timelocks"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "refundPayment",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "resolveDispute",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "winner",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "setFeeRecipient",
+        "inputs": [
+          {
+            "name": "_feeRecipient",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "setKeyRole",
+        "inputs": [
+          {
+            "name": "key",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "role",
+            "type": "uint8",
+            "internalType": "enum INodeRailsEscrow.KeyRole"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "settlePayment",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "unpause",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "usedNonces",
+        "inputs": [
+          {
+            "name": "",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "event",
+        "name": "DisputeInitiated",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "indexed": true,
+            "internalType": "bytes32"
+          },
+          {
+            "name": "merchant",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "payer",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "DisputeResolved",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "indexed": true,
+            "internalType": "bytes32"
+          },
+          {
+            "name": "winner",
+            "type": "address",
+            "indexed": false,
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "platformFee",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "EIP712DomainChanged",
+        "inputs": [],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "FeeRecipientUpdated",
+        "inputs": [
+          {
+            "name": "newFeeRecipient",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "FullStopLifted",
+        "inputs": [],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "FullStopped",
+        "inputs": [],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "KeyRoleUpdated",
+        "inputs": [
+          {
+            "name": "key",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "role",
+            "type": "uint8",
+            "indexed": false,
+            "internalType": "enum INodeRailsEscrow.KeyRole"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "Paused",
+        "inputs": [
+          {
+            "name": "account",
+            "type": "address",
+            "indexed": false,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "PaymentCaptured",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "indexed": true,
+            "internalType": "bytes32"
+          },
+          {
+            "name": "merchant",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "payer",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "token",
+            "type": "address",
+            "indexed": false,
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "feeBps",
+            "type": "uint16",
+            "indexed": false,
+            "internalType": "uint16"
+          },
+          {
+            "name": "timelocks",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "Timelocks"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "PaymentRefunded",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "indexed": true,
+            "internalType": "bytes32"
+          },
+          {
+            "name": "payer",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "PaymentSettled",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "indexed": true,
+            "internalType": "bytes32"
+          },
+          {
+            "name": "merchant",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "merchantAmount",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "platformFee",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "Unpaused",
+        "inputs": [
+          {
+            "name": "account",
+            "type": "address",
+            "indexed": false,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "error",
+        "name": "ECDSAInvalidSignature",
+        "inputs": []
+      },
+      {
+        "type": "error",
+        "name": "ECDSAInvalidSignatureLength",
+        "inputs": [
+          {
+            "name": "length",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ]
+      },
+      {
+        "type": "error",
+        "name": "ECDSAInvalidSignatureS",
+        "inputs": [
+          {
+            "name": "s",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ]
+      },
+      {
+        "type": "error",
+        "name": "EnforcedPause",
+        "inputs": []
+      },
+      {
+        "type": "error",
+        "name": "ExpectedPause",
+        "inputs": []
+      },
+      {
+        "type": "error",
+        "name": "InvalidShortString",
+        "inputs": []
+      },
+      {
+        "type": "error",
+        "name": "ReentrancyGuardReentrantCall",
+        "inputs": []
+      },
+      {
+        "type": "error",
+        "name": "SafeERC20FailedOperation",
+        "inputs": [
+          {
+            "name": "token",
+            "type": "address",
+            "internalType": "address"
+          }
+        ]
+      },
+      {
+        "type": "error",
+        "name": "StringTooLong",
+        "inputs": [
+          {
+            "name": "str",
+            "type": "string",
+            "internalType": "string"
+          }
+        ]
+      }
+    ],
+    "NodeRailsMerchantManager": [
+      {
+        "type": "constructor",
+        "inputs": [
+          {
+            "name": "_superAdmin",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "_admins",
+            "type": "address[]",
+            "internalType": "address[]"
+          }
+        ],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "receive",
+        "stateMutability": "payable"
+      },
+      {
+        "type": "function",
+        "name": "domainSeparator",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "eip712Domain",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "fields",
+            "type": "bytes1",
+            "internalType": "bytes1"
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "internalType": "string"
+          },
+          {
+            "name": "version",
+            "type": "string",
+            "internalType": "string"
+          },
+          {
+            "name": "chainId",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "verifyingContract",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "salt",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "extensions",
+            "type": "uint256[]",
+            "internalType": "uint256[]"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "emergencyWithdraw",
+        "inputs": [
+          {
+            "name": "token",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "to",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "executeNativePayout",
+        "inputs": [
+          {
+            "name": "payoutIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "merchantWallet",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "recipient",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "sessionSignature",
+            "type": "bytes",
+            "internalType": "bytes"
+          },
+          {
+            "name": "sessionExpiry",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "nonce",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "noderailsSignature",
+            "type": "bytes",
+            "internalType": "bytes"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "payable"
+      },
+      {
+        "type": "function",
+        "name": "executePayout",
+        "inputs": [
+          {
+            "name": "payoutIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "merchantWallet",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "recipient",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "token",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "sessionSignature",
+            "type": "bytes",
+            "internalType": "bytes"
+          },
+          {
+            "name": "sessionExpiry",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "nonce",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "noderailsSignature",
+            "type": "bytes",
+            "internalType": "bytes"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "getKeyRole",
+        "inputs": [
+          {
+            "name": "key",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint8",
+            "internalType": "enum INodeRailsMerchantManager.KeyRole"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "isNonceUsed",
+        "inputs": [
+          {
+            "name": "nonce",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "keyRoles",
+        "inputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint8",
+            "internalType": "enum INodeRailsMerchantManager.KeyRole"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "pause",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "paused",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "setKeyRole",
+        "inputs": [
+          {
+            "name": "key",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "role",
+            "type": "uint8",
+            "internalType": "enum INodeRailsMerchantManager.KeyRole"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "unpause",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "usedNonces",
+        "inputs": [
+          {
+            "name": "",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "event",
+        "name": "EIP712DomainChanged",
+        "inputs": [],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "KeyRoleUpdated",
+        "inputs": [
+          {
+            "name": "key",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "role",
+            "type": "uint8",
+            "indexed": false,
+            "internalType": "enum INodeRailsMerchantManager.KeyRole"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "NativePayoutExecuted",
+        "inputs": [
+          {
+            "name": "payoutIntentId",
+            "type": "bytes32",
+            "indexed": true,
+            "internalType": "bytes32"
+          },
+          {
+            "name": "merchantWallet",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "recipient",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "Paused",
+        "inputs": [
+          {
+            "name": "account",
+            "type": "address",
+            "indexed": false,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "PayoutExecuted",
+        "inputs": [
+          {
+            "name": "payoutIntentId",
+            "type": "bytes32",
+            "indexed": true,
+            "internalType": "bytes32"
+          },
+          {
+            "name": "merchantWallet",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "recipient",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "token",
+            "type": "address",
+            "indexed": false,
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "Unpaused",
+        "inputs": [
+          {
+            "name": "account",
+            "type": "address",
+            "indexed": false,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "error",
+        "name": "ECDSAInvalidSignature",
+        "inputs": []
+      },
+      {
+        "type": "error",
+        "name": "ECDSAInvalidSignatureLength",
+        "inputs": [
+          {
+            "name": "length",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ]
+      },
+      {
+        "type": "error",
+        "name": "ECDSAInvalidSignatureS",
+        "inputs": [
+          {
+            "name": "s",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ]
+      },
+      {
+        "type": "error",
+        "name": "EnforcedPause",
+        "inputs": []
+      },
+      {
+        "type": "error",
+        "name": "ExpectedPause",
+        "inputs": []
+      },
+      {
+        "type": "error",
+        "name": "InvalidShortString",
+        "inputs": []
+      },
+      {
+        "type": "error",
+        "name": "ReentrancyGuardReentrantCall",
+        "inputs": []
+      },
+      {
+        "type": "error",
+        "name": "SafeERC20FailedOperation",
+        "inputs": [
+          {
+            "name": "token",
+            "type": "address",
+            "internalType": "address"
+          }
+        ]
+      },
+      {
+        "type": "error",
+        "name": "StringTooLong",
+        "inputs": [
+          {
+            "name": "str",
+            "type": "string",
+            "internalType": "string"
+          }
+        ]
+      }
+    ]
+  },
+  "8453": {
+    "NodeRailsEscrow": [
+      {
+        "type": "constructor",
+        "inputs": [
+          {
+            "name": "_superAdmin",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "_admins",
+            "type": "address[]",
+            "internalType": "address[]"
+          },
+          {
+            "name": "_feeRecipient",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "receive",
+        "stateMutability": "payable"
+      },
+      {
+        "type": "function",
+        "name": "MAX_FEE_BPS",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint16",
+            "internalType": "uint16"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "captureERC20Payment",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "merchant",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "token",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "payer",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "feeBps",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "timelocks",
+            "type": "uint256",
+            "internalType": "Timelocks"
+          },
+          {
+            "name": "permitData",
+            "type": "tuple",
+            "internalType": "struct INodeRailsEscrow.PermitData",
+            "components": [
+              {
+                "name": "amount",
+                "type": "uint256",
+                "internalType": "uint256"
+              },
+              {
+                "name": "deadline",
+                "type": "uint256",
+                "internalType": "uint256"
+              },
+              {
+                "name": "v",
+                "type": "uint8",
+                "internalType": "uint8"
+              },
+              {
+                "name": "r",
+                "type": "bytes32",
+                "internalType": "bytes32"
+              },
+              {
+                "name": "s",
+                "type": "bytes32",
+                "internalType": "bytes32"
+              }
+            ]
+          },
+          {
+            "name": "noderailsSignature",
+            "type": "bytes",
+            "internalType": "bytes"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "captureNativePayment",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "merchant",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "feeBps",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "timelocks",
+            "type": "uint256",
+            "internalType": "Timelocks"
+          },
+          {
+            "name": "noderailsSignature",
+            "type": "bytes",
+            "internalType": "bytes"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "payable"
+      },
+      {
+        "type": "function",
+        "name": "domainSeparator",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "eip712Domain",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "fields",
+            "type": "bytes1",
+            "internalType": "bytes1"
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "internalType": "string"
+          },
+          {
+            "name": "version",
+            "type": "string",
+            "internalType": "string"
+          },
+          {
+            "name": "chainId",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "verifyingContract",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "salt",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "extensions",
+            "type": "uint256[]",
+            "internalType": "uint256[]"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "emergencyWithdraw",
+        "inputs": [
+          {
+            "name": "token",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "to",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "feeRecipient",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "fullStop",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "fullStopped",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "getKeyRole",
+        "inputs": [
+          {
+            "name": "key",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint8",
+            "internalType": "enum INodeRailsEscrow.KeyRole"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "getPayment",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "tuple",
+            "internalType": "struct INodeRailsEscrow.Payment",
+            "components": [
+              {
+                "name": "merchant",
+                "type": "address",
+                "internalType": "address"
+              },
+              {
+                "name": "payer",
+                "type": "address",
+                "internalType": "address"
+              },
+              {
+                "name": "token",
+                "type": "address",
+                "internalType": "address"
+              },
+              {
+                "name": "amount",
+                "type": "uint256",
+                "internalType": "uint256"
+              },
+              {
+                "name": "feeBps",
+                "type": "uint16",
+                "internalType": "uint16"
+              },
+              {
+                "name": "status",
+                "type": "uint8",
+                "internalType": "enum INodeRailsEscrow.PaymentStatus"
+              },
+              {
+                "name": "timelocks",
+                "type": "uint256",
+                "internalType": "Timelocks"
+              }
+            ]
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "initiateDispute",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "isFullStopped",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "keyRoles",
+        "inputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint8",
+            "internalType": "enum INodeRailsEscrow.KeyRole"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "liftFullStop",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "pause",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "paused",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "payments",
+        "inputs": [
+          {
+            "name": "",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "merchant",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "payer",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "token",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "feeBps",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "status",
+            "type": "uint8",
+            "internalType": "enum INodeRailsEscrow.PaymentStatus"
+          },
+          {
+            "name": "timelocks",
+            "type": "uint256",
+            "internalType": "Timelocks"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "refundPayment",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "resolveDispute",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "winner",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "setFeeRecipient",
+        "inputs": [
+          {
+            "name": "_feeRecipient",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "setKeyRole",
+        "inputs": [
+          {
+            "name": "key",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "role",
+            "type": "uint8",
+            "internalType": "enum INodeRailsEscrow.KeyRole"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "settlePayment",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "unpause",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "usedNonces",
+        "inputs": [
+          {
+            "name": "",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "event",
+        "name": "DisputeInitiated",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "indexed": true,
+            "internalType": "bytes32"
+          },
+          {
+            "name": "merchant",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "payer",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "DisputeResolved",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "indexed": true,
+            "internalType": "bytes32"
+          },
+          {
+            "name": "winner",
+            "type": "address",
+            "indexed": false,
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "platformFee",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "EIP712DomainChanged",
+        "inputs": [],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "FeeRecipientUpdated",
+        "inputs": [
+          {
+            "name": "newFeeRecipient",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "FullStopLifted",
+        "inputs": [],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "FullStopped",
+        "inputs": [],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "KeyRoleUpdated",
+        "inputs": [
+          {
+            "name": "key",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "role",
+            "type": "uint8",
+            "indexed": false,
+            "internalType": "enum INodeRailsEscrow.KeyRole"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "Paused",
+        "inputs": [
+          {
+            "name": "account",
+            "type": "address",
+            "indexed": false,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "PaymentCaptured",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "indexed": true,
+            "internalType": "bytes32"
+          },
+          {
+            "name": "merchant",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "payer",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "token",
+            "type": "address",
+            "indexed": false,
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "feeBps",
+            "type": "uint16",
+            "indexed": false,
+            "internalType": "uint16"
+          },
+          {
+            "name": "timelocks",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "Timelocks"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "PaymentRefunded",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "indexed": true,
+            "internalType": "bytes32"
+          },
+          {
+            "name": "payer",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "PaymentSettled",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "indexed": true,
+            "internalType": "bytes32"
+          },
+          {
+            "name": "merchant",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "merchantAmount",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "platformFee",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "Unpaused",
+        "inputs": [
+          {
+            "name": "account",
+            "type": "address",
+            "indexed": false,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "error",
+        "name": "ECDSAInvalidSignature",
+        "inputs": []
+      },
+      {
+        "type": "error",
+        "name": "ECDSAInvalidSignatureLength",
+        "inputs": [
+          {
+            "name": "length",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ]
+      },
+      {
+        "type": "error",
+        "name": "ECDSAInvalidSignatureS",
+        "inputs": [
+          {
+            "name": "s",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ]
+      },
+      {
+        "type": "error",
+        "name": "EnforcedPause",
+        "inputs": []
+      },
+      {
+        "type": "error",
+        "name": "ExpectedPause",
+        "inputs": []
+      },
+      {
+        "type": "error",
+        "name": "InvalidShortString",
+        "inputs": []
+      },
+      {
+        "type": "error",
+        "name": "ReentrancyGuardReentrantCall",
+        "inputs": []
+      },
+      {
+        "type": "error",
+        "name": "SafeERC20FailedOperation",
+        "inputs": [
+          {
+            "name": "token",
+            "type": "address",
+            "internalType": "address"
+          }
+        ]
+      },
+      {
+        "type": "error",
+        "name": "StringTooLong",
+        "inputs": [
+          {
+            "name": "str",
+            "type": "string",
+            "internalType": "string"
+          }
+        ]
+      }
+    ]
+  },
+  "545": {
+    "NodeRailsEscrow": [
+      {
+        "type": "constructor",
+        "inputs": [
+          {
+            "name": "_superAdmin",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "_admins",
+            "type": "address[]",
+            "internalType": "address[]"
+          },
+          {
+            "name": "_feeRecipient",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "receive",
+        "stateMutability": "payable"
+      },
+      {
+        "type": "function",
+        "name": "MAX_FEE_BPS",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint16",
+            "internalType": "uint16"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "captureERC20Payment",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "merchant",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "token",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "payer",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "feeBps",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "timelocks",
+            "type": "uint256",
+            "internalType": "Timelocks"
+          },
+          {
+            "name": "permitData",
+            "type": "tuple",
+            "internalType": "struct INodeRailsEscrow.PermitData",
+            "components": [
+              {
+                "name": "amount",
+                "type": "uint256",
+                "internalType": "uint256"
+              },
+              {
+                "name": "deadline",
+                "type": "uint256",
+                "internalType": "uint256"
+              },
+              {
+                "name": "v",
+                "type": "uint8",
+                "internalType": "uint8"
+              },
+              {
+                "name": "r",
+                "type": "bytes32",
+                "internalType": "bytes32"
+              },
+              {
+                "name": "s",
+                "type": "bytes32",
+                "internalType": "bytes32"
+              }
+            ]
+          },
+          {
+            "name": "noderailsSignature",
+            "type": "bytes",
+            "internalType": "bytes"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "captureNativePayment",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "merchant",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "feeBps",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "timelocks",
+            "type": "uint256",
+            "internalType": "Timelocks"
+          },
+          {
+            "name": "noderailsSignature",
+            "type": "bytes",
+            "internalType": "bytes"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "payable"
+      },
+      {
+        "type": "function",
+        "name": "domainSeparator",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "eip712Domain",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "fields",
+            "type": "bytes1",
+            "internalType": "bytes1"
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "internalType": "string"
+          },
+          {
+            "name": "version",
+            "type": "string",
+            "internalType": "string"
+          },
+          {
+            "name": "chainId",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "verifyingContract",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "salt",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "extensions",
+            "type": "uint256[]",
+            "internalType": "uint256[]"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "emergencyWithdraw",
+        "inputs": [
+          {
+            "name": "token",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "to",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "feeRecipient",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "fullStop",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "fullStopped",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "getKeyRole",
+        "inputs": [
+          {
+            "name": "key",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint8",
+            "internalType": "enum INodeRailsEscrow.KeyRole"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "getPayment",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "tuple",
+            "internalType": "struct INodeRailsEscrow.Payment",
+            "components": [
+              {
+                "name": "merchant",
+                "type": "address",
+                "internalType": "address"
+              },
+              {
+                "name": "payer",
+                "type": "address",
+                "internalType": "address"
+              },
+              {
+                "name": "token",
+                "type": "address",
+                "internalType": "address"
+              },
+              {
+                "name": "amount",
+                "type": "uint256",
+                "internalType": "uint256"
+              },
+              {
+                "name": "feeBps",
+                "type": "uint16",
+                "internalType": "uint16"
+              },
+              {
+                "name": "status",
+                "type": "uint8",
+                "internalType": "enum INodeRailsEscrow.PaymentStatus"
+              },
+              {
+                "name": "timelocks",
+                "type": "uint256",
+                "internalType": "Timelocks"
+              }
+            ]
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "initiateDispute",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "isFullStopped",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "keyRoles",
+        "inputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint8",
+            "internalType": "enum INodeRailsEscrow.KeyRole"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "liftFullStop",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "pause",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "paused",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "payments",
+        "inputs": [
+          {
+            "name": "",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "merchant",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "payer",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "token",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "feeBps",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "status",
+            "type": "uint8",
+            "internalType": "enum INodeRailsEscrow.PaymentStatus"
+          },
+          {
+            "name": "timelocks",
+            "type": "uint256",
+            "internalType": "Timelocks"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "refundPayment",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "resolveDispute",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "winner",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "setFeeRecipient",
+        "inputs": [
+          {
+            "name": "_feeRecipient",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "setKeyRole",
+        "inputs": [
+          {
+            "name": "key",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "role",
+            "type": "uint8",
+            "internalType": "enum INodeRailsEscrow.KeyRole"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "settlePayment",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "unpause",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "usedNonces",
+        "inputs": [
+          {
+            "name": "",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "event",
+        "name": "DisputeInitiated",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "indexed": true,
+            "internalType": "bytes32"
+          },
+          {
+            "name": "merchant",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "payer",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "DisputeResolved",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "indexed": true,
+            "internalType": "bytes32"
+          },
+          {
+            "name": "winner",
+            "type": "address",
+            "indexed": false,
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "platformFee",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "EIP712DomainChanged",
+        "inputs": [],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "FeeRecipientUpdated",
+        "inputs": [
+          {
+            "name": "newFeeRecipient",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "FullStopLifted",
+        "inputs": [],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "FullStopped",
+        "inputs": [],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "KeyRoleUpdated",
+        "inputs": [
+          {
+            "name": "key",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "role",
+            "type": "uint8",
+            "indexed": false,
+            "internalType": "enum INodeRailsEscrow.KeyRole"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "Paused",
+        "inputs": [
+          {
+            "name": "account",
+            "type": "address",
+            "indexed": false,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "PaymentCaptured",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "indexed": true,
+            "internalType": "bytes32"
+          },
+          {
+            "name": "merchant",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "payer",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "token",
+            "type": "address",
+            "indexed": false,
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "feeBps",
+            "type": "uint16",
+            "indexed": false,
+            "internalType": "uint16"
+          },
+          {
+            "name": "timelocks",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "Timelocks"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "PaymentRefunded",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "indexed": true,
+            "internalType": "bytes32"
+          },
+          {
+            "name": "payer",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "PaymentSettled",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "indexed": true,
+            "internalType": "bytes32"
+          },
+          {
+            "name": "merchant",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "merchantAmount",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "platformFee",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "Unpaused",
+        "inputs": [
+          {
+            "name": "account",
+            "type": "address",
+            "indexed": false,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "error",
+        "name": "ECDSAInvalidSignature",
+        "inputs": []
+      },
+      {
+        "type": "error",
+        "name": "ECDSAInvalidSignatureLength",
+        "inputs": [
+          {
+            "name": "length",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ]
+      },
+      {
+        "type": "error",
+        "name": "ECDSAInvalidSignatureS",
+        "inputs": [
+          {
+            "name": "s",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ]
+      },
+      {
+        "type": "error",
+        "name": "EnforcedPause",
+        "inputs": []
+      },
+      {
+        "type": "error",
+        "name": "ExpectedPause",
+        "inputs": []
+      },
+      {
+        "type": "error",
+        "name": "InvalidShortString",
+        "inputs": []
+      },
+      {
+        "type": "error",
+        "name": "ReentrancyGuardReentrantCall",
+        "inputs": []
+      },
+      {
+        "type": "error",
+        "name": "SafeERC20FailedOperation",
+        "inputs": [
+          {
+            "name": "token",
+            "type": "address",
+            "internalType": "address"
+          }
+        ]
+      },
+      {
+        "type": "error",
+        "name": "StringTooLong",
+        "inputs": [
+          {
+            "name": "str",
+            "type": "string",
+            "internalType": "string"
+          }
+        ]
+      }
+    ]
+  },
+  "314159": {
+    "NodeRailsEscrow": [
+      {
+        "type": "constructor",
+        "inputs": [
+          {
+            "name": "_superAdmin",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "_admins",
+            "type": "address[]",
+            "internalType": "address[]"
+          },
+          {
+            "name": "_feeRecipient",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "receive",
+        "stateMutability": "payable"
+      },
+      {
+        "type": "function",
+        "name": "MAX_FEE_BPS",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint16",
+            "internalType": "uint16"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "captureERC20Payment",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "merchant",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "token",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "payer",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "feeBps",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "timelocks",
+            "type": "uint256",
+            "internalType": "Timelocks"
+          },
+          {
+            "name": "permitData",
+            "type": "tuple",
+            "internalType": "struct INodeRailsEscrow.PermitData",
+            "components": [
+              {
+                "name": "amount",
+                "type": "uint256",
+                "internalType": "uint256"
+              },
+              {
+                "name": "deadline",
+                "type": "uint256",
+                "internalType": "uint256"
+              },
+              {
+                "name": "v",
+                "type": "uint8",
+                "internalType": "uint8"
+              },
+              {
+                "name": "r",
+                "type": "bytes32",
+                "internalType": "bytes32"
+              },
+              {
+                "name": "s",
+                "type": "bytes32",
+                "internalType": "bytes32"
+              }
+            ]
+          },
+          {
+            "name": "noderailsSignature",
+            "type": "bytes",
+            "internalType": "bytes"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "captureNativePayment",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "merchant",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "feeBps",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "timelocks",
+            "type": "uint256",
+            "internalType": "Timelocks"
+          },
+          {
+            "name": "noderailsSignature",
+            "type": "bytes",
+            "internalType": "bytes"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "payable"
+      },
+      {
+        "type": "function",
+        "name": "domainSeparator",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "eip712Domain",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "fields",
+            "type": "bytes1",
+            "internalType": "bytes1"
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "internalType": "string"
+          },
+          {
+            "name": "version",
+            "type": "string",
+            "internalType": "string"
+          },
+          {
+            "name": "chainId",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "verifyingContract",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "salt",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "extensions",
+            "type": "uint256[]",
+            "internalType": "uint256[]"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "emergencyWithdraw",
+        "inputs": [
+          {
+            "name": "token",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "to",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "feeRecipient",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "fullStop",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "fullStopped",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "getKeyRole",
+        "inputs": [
+          {
+            "name": "key",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint8",
+            "internalType": "enum INodeRailsEscrow.KeyRole"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "getPayment",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "tuple",
+            "internalType": "struct INodeRailsEscrow.Payment",
+            "components": [
+              {
+                "name": "merchant",
+                "type": "address",
+                "internalType": "address"
+              },
+              {
+                "name": "payer",
+                "type": "address",
+                "internalType": "address"
+              },
+              {
+                "name": "token",
+                "type": "address",
+                "internalType": "address"
+              },
+              {
+                "name": "amount",
+                "type": "uint256",
+                "internalType": "uint256"
+              },
+              {
+                "name": "feeBps",
+                "type": "uint16",
+                "internalType": "uint16"
+              },
+              {
+                "name": "status",
+                "type": "uint8",
+                "internalType": "enum INodeRailsEscrow.PaymentStatus"
+              },
+              {
+                "name": "timelocks",
+                "type": "uint256",
+                "internalType": "Timelocks"
+              }
+            ]
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "initiateDispute",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "isFullStopped",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "keyRoles",
+        "inputs": [
+          {
+            "name": "",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint8",
+            "internalType": "enum INodeRailsEscrow.KeyRole"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "liftFullStop",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "pause",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "paused",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "payments",
+        "inputs": [
+          {
+            "name": "",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "merchant",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "payer",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "token",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "feeBps",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "status",
+            "type": "uint8",
+            "internalType": "enum INodeRailsEscrow.PaymentStatus"
+          },
+          {
+            "name": "timelocks",
+            "type": "uint256",
+            "internalType": "Timelocks"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "refundPayment",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "resolveDispute",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "winner",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "setFeeRecipient",
+        "inputs": [
+          {
+            "name": "_feeRecipient",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "setKeyRole",
+        "inputs": [
+          {
+            "name": "key",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "role",
+            "type": "uint8",
+            "internalType": "enum INodeRailsEscrow.KeyRole"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "settlePayment",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "unpause",
+        "inputs": [],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+      },
+      {
+        "type": "function",
+        "name": "usedNonces",
+        "inputs": [
+          {
+            "name": "",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+          }
+        ],
+        "stateMutability": "view"
+      },
+      {
+        "type": "event",
+        "name": "DisputeInitiated",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "indexed": true,
+            "internalType": "bytes32"
+          },
+          {
+            "name": "merchant",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "payer",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "DisputeResolved",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "indexed": true,
+            "internalType": "bytes32"
+          },
+          {
+            "name": "winner",
+            "type": "address",
+            "indexed": false,
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "platformFee",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "EIP712DomainChanged",
+        "inputs": [],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "FeeRecipientUpdated",
+        "inputs": [
+          {
+            "name": "newFeeRecipient",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "FullStopLifted",
+        "inputs": [],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "FullStopped",
+        "inputs": [],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "KeyRoleUpdated",
+        "inputs": [
+          {
+            "name": "key",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "role",
+            "type": "uint8",
+            "indexed": false,
+            "internalType": "enum INodeRailsEscrow.KeyRole"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "Paused",
+        "inputs": [
+          {
+            "name": "account",
+            "type": "address",
+            "indexed": false,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "PaymentCaptured",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "indexed": true,
+            "internalType": "bytes32"
+          },
+          {
+            "name": "merchant",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "payer",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "token",
+            "type": "address",
+            "indexed": false,
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "feeBps",
+            "type": "uint16",
+            "indexed": false,
+            "internalType": "uint16"
+          },
+          {
+            "name": "timelocks",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "Timelocks"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "PaymentRefunded",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "indexed": true,
+            "internalType": "bytes32"
+          },
+          {
+            "name": "payer",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "PaymentSettled",
+        "inputs": [
+          {
+            "name": "paymentIntentId",
+            "type": "bytes32",
+            "indexed": true,
+            "internalType": "bytes32"
+          },
+          {
+            "name": "merchant",
+            "type": "address",
+            "indexed": true,
+            "internalType": "address"
+          },
+          {
+            "name": "merchantAmount",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          },
+          {
+            "name": "platformFee",
+            "type": "uint256",
+            "indexed": false,
+            "internalType": "uint256"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "event",
+        "name": "Unpaused",
+        "inputs": [
+          {
+            "name": "account",
+            "type": "address",
+            "indexed": false,
+            "internalType": "address"
+          }
+        ],
+        "anonymous": false
+      },
+      {
+        "type": "error",
+        "name": "ECDSAInvalidSignature",
+        "inputs": []
+      },
+      {
+        "type": "error",
+        "name": "ECDSAInvalidSignatureLength",
+        "inputs": [
+          {
+            "name": "length",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ]
+      },
+      {
+        "type": "error",
+        "name": "ECDSAInvalidSignatureS",
+        "inputs": [
+          {
+            "name": "s",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ]
+      },
+      {
+        "type": "error",
+        "name": "EnforcedPause",
+        "inputs": []
+      },
+      {
+        "type": "error",
+        "name": "ExpectedPause",
+        "inputs": []
+      },
+      {
+        "type": "error",
+        "name": "InvalidShortString",
+        "inputs": []
+      },
+      {
+        "type": "error",
+        "name": "ReentrancyGuardReentrantCall",
+        "inputs": []
+      },
+      {
+        "type": "error",
+        "name": "SafeERC20FailedOperation",
+        "inputs": [
+          {
+            "name": "token",
+            "type": "address",
+            "internalType": "address"
+          }
+        ]
+      },
+      {
+        "type": "error",
+        "name": "StringTooLong",
+        "inputs": [
+          {
+            "name": "str",
+            "type": "string",
+            "internalType": "string"
+          }
+        ]
+      }
+    ]
+  }
+}
