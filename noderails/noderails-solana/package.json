@@ -1,0 +1,30 @@
+{
+  "name": "@noderails/anchor-deploy",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "JSON-driven Anchor build, deploy, and initialize for NodeRails Solana programs",
+  "scripts": {
+    "deploy:devnet": "DEPLOY_CONFIG=./deploy.devnet.json tsx scripts/deploy-from-config.ts",
+    "deploy:mainnet": "DEPLOY_CONFIG=./deploy.mainnet.json tsx scripts/deploy-from-config.ts",
+    "test:mocha": "tsx ./node_modules/mocha/bin/mocha.js --timeout 1200000 tests/integration.test.ts",
+    "test:local-integration": "bash scripts/run-local-mocha.sh",
+    "test:local-integration:compute": "bash scripts/run-local-mocha.sh --grep \"compute budget\""
+  },
+  "dependencies": {
+    "@anchor-lang/core": "1.0.2",
+    "@solana/web3.js": "^1.98.4"
+  },
+  "devDependencies": {
+    "@noderails/solana": "workspace:*",
+    "@solana/spl-token": "^0.4.9",
+    "@types/chai": "^4.3.20",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.0.0",
+    "chai": "^4.5.0",
+    "mocha": "^10.4.0",
+    "tweetnacl": "^1.0.3",
+    "tsx": "^4.19.0",
+    "typescript": "^5.4.0"
+  }
+}

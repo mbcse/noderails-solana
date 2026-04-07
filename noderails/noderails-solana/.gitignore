@@ -1,0 +1,10 @@
+# Anchor local state + ledger
+.anchor/
+test-ledger/
+
+# Rust / BPF build artifacts
+target/
+**/*.rs.bk
+
+# Local-only keypairs (deploy configs should use env or secrets manager)
+**/*-keypair.json
