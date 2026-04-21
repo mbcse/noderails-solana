@@ -1,0 +1,48 @@
+# ── Dependencies ──────────────────────────────────────────────────────────────
+node_modules/
+
+# ── Builds & caches ───────────────────────────────────────────────────────────
+.turbo/
+dist/
+.next/
+.expo/
+coverage/
+*.log
+*.tsbuildinfo
+
+# ── OS ────────────────────────────────────────────────────────────────────────
+.DS_Store
+
+# ── Secrets & environment (templates remain tracked) ─────────────────────────
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# ── Local crypto / keys ───────────────────────────────────────────────────────
+.legacy-signer-state.json
+*.pem
+*.p12
+
+# ── Terraform local state & provider cache ────────────────────────────────────
+*.tfstate
+*.tfstate.*
+.terraform/
+# Commit .terraform.lock.hcl when using Terraform for reproducible provider versions.
+
+# ── Markdown — excluded from GitHub remote per repo policy ────────────────────
+*.md
+!README.md
+
+# ── AI / agent tooling (local only — do not push) ─────────────────────────────
+.cursor/
+.kiro/
+.aider*
+.cline/
+
+# ── Deploy / IDE (optional local only) ─────────────────────────────────────────
+.vercel/
+.vscode/
+.idea/
+
+# pnpm-lock.yaml is intentionally COMMITTED for reproducible installs & CI.
