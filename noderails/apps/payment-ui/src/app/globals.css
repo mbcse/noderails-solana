@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@theme inline {
+  --color-background: #f7f8fa;
+  --color-foreground: #1a1a2e;
+  --color-card: #ffffff;
+  --color-card-foreground: #1a1a2e;
+  --color-border: #e5e7eb;
+  --color-input: #ffffff;
+  --color-primary: #635bff;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #f3f4f6;
+  --color-secondary-foreground: #4b5563;
+  --color-muted: #f3f4f6;
+  --color-muted-foreground: #6b7280;
+  --color-accent: #635bff;
+  --color-accent-foreground: #1a1a2e;
+  --color-destructive: #ef4444;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-ring: #635bff;
+  --radius: 0.625rem;
+}
+
+:root {
+  --background: #f7f8fa;
+  --foreground: #1a1a2e;
+  --card: #ffffff;
+  --card-foreground: #1a1a2e;
+  --border: #e5e7eb;
+  --input: #ffffff;
+  --primary: #635bff;
+  --primary-hover: #5851ea;
+  --primary-foreground: #ffffff;
+  --secondary: #f3f4f6;
+  --secondary-foreground: #4b5563;
+  --muted: #f3f4f6;
+  --muted-foreground: #6b7280;
+  --accent: #635bff;
+  --success: #10b981;
+  --destructive: #ef4444;
+  --warning: #f59e0b;
+  --ring: #635bff;
+  --radius: 0.625rem;
+}
+
+* {
+  border-color: var(--border);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Left panel: sophisticated dark with subtle mesh gradient ── */
+.checkout-panel-left {
+  background: #0f172a;
+  position: relative;
+  overflow: hidden;
+}
+.checkout-panel-left::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(99, 91, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 60% 10%, rgba(99, 91, 255, 0.06) 0%, transparent 30%);
+  pointer-events: none;
+}
+
+/* ── Right panel ── */
+.checkout-right-bg {
+  position: relative;
+  background: #ffffff;
+}
+@media (min-width: 768px) {
+  .checkout-right-bg {
+    background: #f7f8fa;
+  }
+}
+
+/*
+ * Solana wallet-adapter: keep the whole dialog above ConnectKit, but do not raise the
+ * full-screen overlay above the wallet list. The library renders overlay after the
+ * panel in the DOM; giving overlay a huge z-index made every click hit backdrop-close.
+ */
+.wallet-adapter-modal {
+  z-index: 100000 !important;
+}
+.wallet-adapter-modal-container {
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+}
+.wallet-adapter-modal-wrapper {
+  pointer-events: auto;
+}
+.wallet-adapter-modal-overlay {
+  z-index: 0 !important;
+}

@@ -1,0 +1,19 @@
+{
+  "name": "@noderails-card/enclave-signer",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx watch src/index.ts",
+    "clean": "rm -rf dist",
+    "build:eif": "echo \"nitro-cli build-enclave --docker-uri noderails-card-signer:latest --output-file signer.eif\""
+  },
+  "dependencies": {
+    "@noderails-card/crypto": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.4.0"
+  }
+}
