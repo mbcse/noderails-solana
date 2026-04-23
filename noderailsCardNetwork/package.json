@@ -1,0 +1,55 @@
+{
+  "name": "noderails-card-network",
+  "version": "0.1.0",
+  "private": true,
+  "description": "NodeRails WallCard · Wallet Card (crypto in familiar card form)",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --ui stream --continue=always",
+    "dev:no-mobile": "pnpm dev:web",
+    "dev:web": "turbo run dev --ui stream --continue=always --filter=!@noderails-card/mobile",
+    "dev:api": "pnpm --filter @noderails-card/api dev",
+    "dev:signer-host": "pnpm --filter @noderails-card/signer-host dev",
+    "dev:worker": "pnpm --filter @noderails-card/worker dev",
+    "dev:backend:signing": "concurrently -k -p \"{name}\" -c \"bgBlue,bgGreen\" -n api,signer \"pnpm dev:api\" \"pnpm dev:signer-host\"",
+    "dev:backend": "concurrently -k -p \"{name}\" -c \"bgBlue,bgGreen,bgMagenta\" -n api,signer,worker \"pnpm dev:api\" \"pnpm dev:signer-host\" \"pnpm dev:worker\"",
+    "dev:apps": "concurrently -k -p \"{name}\" -c \"bgCyan,bgYellow,bgWhite\" -n web,dashboard,mobile \"pnpm --filter @noderails-card/web dev\" \"pnpm --filter @noderails-card/dashboard dev\" \"pnpm --filter @noderails-card/mobile dev:mac\"",
+    "dev:all": "concurrently -k -p \"{name}\" -c \"bgBlue,bgGreen,bgMagenta,bgCyan,bgYellow,bgWhite\" -n api,signer,worker,web,dashboard,mobile \"pnpm dev:api\" \"pnpm dev:signer-host\" \"pnpm dev:worker\" \"pnpm --filter @noderails-card/web dev\" \"pnpm --filter @noderails-card/dashboard dev\" \"pnpm --filter @noderails-card/mobile dev:mac\"",
+    "docker:api:build": "docker compose build backend",
+    "docker:api:up": "docker compose up --build -d",
+    "docker:api:tls:up": "docker compose up --build -d",
+    "docker:api:down": "docker compose down",
+    "docker:logs": "docker compose logs -f --tail=200",
+    "db:migrate:deploy": "pnpm --filter @noderails-card/database exec prisma migrate deploy",
+    "render:build:api": "NODE_ENV=development pnpm install && pnpm exec turbo run build --filter=@noderails-card/api",
+    "render:start:api": "pnpm --filter @noderails-card/api run start:prod",
+    "render:build:worker": "NODE_ENV=development pnpm install && pnpm exec turbo run build --filter=@noderails-card/worker",
+    "render:start:worker": "pnpm --filter @noderails-card/worker run start:prod",
+    "render:build:signer-host": "NODE_ENV=development pnpm install && pnpm exec turbo run build --filter=@noderails-card/signer-host",
+    "render:start:signer-host": "pnpm --filter @noderails-card/signer-host run start:prod",
+    "render:build:stack": "NODE_ENV=development pnpm install && pnpm exec turbo run build --filter=@noderails-card/api --filter=@noderails-card/signer-host --filter=@noderails-card/worker",
+    "start:prod:backend": "concurrently -k -p \"{name}\" -c \"bgBlue,bgGreen,bgMagenta\" -n api,signer,worker \"pnpm --filter @noderails-card/api run start:prod\" \"pnpm --filter @noderails-card/signer-host run start:prod\" \"pnpm --filter @noderails-card/worker run start:prod\"",
+    "mobile:ios": "pnpm --filter @noderails-card/mobile ios",
+    "mobile:ios:prod": "pnpm --filter @noderails-card/mobile ios:prod",
+    "mobile:dev:native:prod-api": "pnpm --filter @noderails-card/mobile dev:native:prod-api",
+    "mobile:expo:clear-ios-cache": "pnpm --filter @noderails-card/mobile expo:clear-ios-simulator-cache",
+    "mobile:expo:simulator:uninstall-expo-go": "pnpm --filter @noderails-card/mobile expo:simulator:uninstall-expo-go",
+    "mobile:ios:sim:open": "pnpm --filter @noderails-card/mobile ios:sim:open",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "clean": "turbo run clean && rm -rf node_modules"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "dotenv-cli": "^8.0.0",
+    "turbo": "^2.0.0",
+    "typescript": "^5.4.0"
+  },
+  "packageManager": "pnpm@9.0.0",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "viem": "2.21.0"
+  }
+}
