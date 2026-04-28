@@ -1,0 +1,228 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ChainFamily {
+  evm
+  solana
+}
+
+enum TokenKind {
+  erc20
+  spl
+}
+
+enum ShareIndex {
+  A
+  B
+}
+
+enum SigningStatus {
+  pending
+  awaiting_pin
+  awaiting_otp
+  signing
+  succeeded
+  failed
+  expired
+}
+
+model User {
+  id             String           @id @default(cuid())
+  email          String           @unique
+  /// Card print name + settings profile (set at onboarding)
+  displayName    String?
+  phone          String?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  pinHash        String?
+  accounts       Account[]
+  cards          Card[]
+  otpAttempts    OtpAttempt[]
+  signingReqs    SigningRequest[]
+}
+
+model OtpAttempt {
+  id         String   @id @default(cuid())
+  userId     String
+  purpose    String
+  channel    String
+  codeHash   String
+  expiresAt  DateTime
+  consumedAt DateTime?
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Account {
+  id             String      @id @default(cuid())
+  userId         String
+  alias16        String      @unique
+  chainFamily    ChainFamily
+  chainKey       String?
+  address        String
+  walletRef      String?     @unique
+  walletProvider String      @default("v1")
+  createdAt      DateTime    @default(now())
+  user           User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ChainConfig {
+  id          String        @id @default(cuid())
+  key         String        @unique
+  name        String
+  symbol      String
+  family      ChainFamily
+  rpcUrl      String
+  explorerUrl String?
+  isEnabled   Boolean       @default(true)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  tokens      TokenConfig[]
+}
+
+model TokenConfig {
+  id              String      @id @default(cuid())
+  chainKey        String
+  chain           ChainConfig @relation(fields: [chainKey], references: [key], onDelete: Cascade)
+  symbol          String
+  kind            TokenKind
+  contractAddress String
+  decimals        Int?
+  isEnabled       Boolean     @default(true)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  @@unique([chainKey, symbol])
+}
+
+model Card {
+  id            String      @id @default(cuid())
+  userId        String
+  accountId     String?
+  maskedNumber  String
+  panLastFour   String
+  binPrefix     String
+  expiryMonth   Int
+  expiryYear    Int
+  brand         String      @default("WallCard")
+  status        String
+  cvvHash       String?
+  panHash       String?
+  /// SHA-256(pepper:PAN_digits) hex for card-present signing lookup (not reversible)
+  panLookupHash String?      @unique
+  /// AES-256-GCM blob for CVV digits (same envelope as panEncrypted); plaintext CVV never logged
+  cvvEncrypted  Bytes?
+  /// AES-256-GCM blob (IV + auth tag + ciphertext); plaintext PAN never logged
+  panEncrypted  Bytes?
+  createdAt     DateTime    @default(now())
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model WrappedKeyShare {
+  id                     String   @id @default(cuid())
+  userId                 String
+  shareIndex             ShareIndex
+  chainFamily            ChainFamily
+  kmsKeyId               String
+  wrappedBlob            Bytes
+  isPinProtected         Boolean  @default(false)
+  attestationContextHash String
+  createdAt              DateTime @default(now())
+
+  @@unique([userId, shareIndex, chainFamily])
+}
+
+model PinAttemptCounter {
+  id                     String   @id @default(cuid())
+  userId                 String   @unique
+  wrappedCounterBlob     Bytes
+  kmsKeyId               String
+  attestationContextHash String
+  updatedAt              DateTime @updatedAt
+}
+
+model SigningRequest {
+  id             String        @id @default(cuid())
+  userId         String
+  status         SigningStatus @default(pending)
+  chainFamily    ChainFamily
+  method         String
+  payload        Json
+  signature      String?
+  signingOutput  Json?
+  error          String?
+  /// Optional client hint: e.g. mobile_app, wallet_sdk_iframe
+  requestSource  String?
+  /// Optional origin URL or deep link referrer
+  requestOrigin  String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Transaction {
+  id          String      @id @default(cuid())
+  userId      String
+  chainFamily ChainFamily
+  txHash      String      @unique
+  status      String
+  createdAt   DateTime    @default(now())
+}
+
+model DApp {
+  id            String   @id @default(cuid())
+  name          String
+  origin        String   @unique
+  status        String   @default("unverified")
+  createdAt     DateTime @default(now())
+}
+
+model WebhookEndpoint {
+  id         String   @id @default(cuid())
+  dappId     String
+  url        String
+  secretHash String
+  createdAt  DateTime @default(now())
+}
+
+model Event {
+  id        String   @id @default(cuid())
+  type      String
+  payload   Json
+  createdAt DateTime @default(now())
+}
+
+model WebhookDelivery {
+  id            String   @id @default(cuid())
+  endpointId    String
+  eventId       String
+  attemptCount  Int      @default(0)
+  status        String   @default("pending")
+  nextAttemptAt DateTime?
+  createdAt     DateTime @default(now())
+}
+
+model IdempotencyKey {
+  id           String   @id @default(cuid())
+  key          String   @unique
+  requestHash  String
+  responseBlob Json
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+}
+
+model AuditLog {
+  id               String   @id @default(cuid())
+  userId           String?
+  action           String
+  enclavePcrDigest String?
+  kmsRequestId     String?
+  metadata         Json?
+  createdAt        DateTime @default(now())
+}
