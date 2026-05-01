@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "WallCard",
+    "slug": "noderails-card",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "scheme": "wallcard",
+    "ios": {
+      "bundleIdentifier": "com.noderails.wallcard",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.noderails.wallcard"
+    },
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}
