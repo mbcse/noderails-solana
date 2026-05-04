@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+/* Package-local sources only — apps must `@import tailwindcss` in their CSS and add `@source` from a file under that app tree (pnpm on Vercel resolves this package inside `.pnpm`; `../../../apps/...` from here does NOT reach the monorepo). */
+@source "./**/*.{tsx,ts,jsx,js}";
+
+@import "./theme.css";
