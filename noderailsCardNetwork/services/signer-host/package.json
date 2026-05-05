@@ -1,0 +1,27 @@
+{
+  "name": "@noderails-card/signer-host",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx watch --env-file=../../.env src/index.ts",
+    "start": "node --env-file=../../.env dist/index.js",
+    "start:prod": "node dist/index.js",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@noderails-card/common": "workspace:*",
+    "@noderails-card/crypto": "workspace:*",
+    "@solana/web3.js": "^1.98.0",
+    "express": "^4.21.0",
+    "tweetnacl": "^1.0.3",
+    "viem": "^2.21.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "tsx": "^4.19.0",
+    "typescript": "^5.4.0"
+  }
+}
