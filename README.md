@@ -57,7 +57,7 @@ The **Visa lesson** was **interoperability and habit**; the **NodeRails answer**
 | **WallCard** | **Wallet-as-card**: PAN/CVV/PIN/OTP-style approvals and `provider.request`-compatible signing so partners get a familiar integration surface without training every user as a wallet power user. Under the hood, members hold **EVM and Solana** wallet material governed by policy. | End users, issuers, programmes |
 | **NodeRails Card Network** | Network-style **rails and roles** around programmable settlement: shared habits, APIs, and operating practice. **WallCard** is how that layer meets people and embedded commerce. | Programmes, partners, sponsors |
 | **Fraud engine** | HTTP API that scores **Solana wallet addresses** (base58) using **Covalent GoldRush** foundational APIs; NodeRails stores a snapshot on **`PaymentIntent.metadata`** during Solana authorization when configured. | Risk, compliance, treasury |
-| **Dodo Payments** | Optional **card** rail: **`noderails-server`** creates **Dodo checkout sessions**; **`/webhooks/dodo`** updates **card audit metadata** only (does not capture on-chain escrow). | Card payers alongside crypto checkout |
+| **Dodo Payments** | **First-class fiat card rail** beside crypto escrow: server-created **Dodo checkout sessions**, hosted card UX, **`/webhooks/dodo`** correlated to the same **checkout session / payment intent** as wallet pay — built for **ecosystem bounty** and **unified checkout**. | Card + crypto on one NodeRails checkout |
 | **MTXM** | **Multichain Transaction Manager**: async **sign → broadcast → confirm** with webhooks. NodeRails submits and tracks many on-chain steps (EVM calldata and **Solana** instructions) through one lifecycle model. | Platform backend |
 | **NodeRails Indexer** | **Multi-chain indexer**: registered contracts/programs, event logs, watched native transfers, HMAC webhooks; **observes** on-chain emissions for reconciliation and confirmation alongside MTXM. | Platform backend |
 
@@ -91,6 +91,8 @@ This tree is a **curated snapshot**: dependency folders, most markdown, env file
 3. **Rails:** Choose chains and tokens; override per checkout or payment intent when the API allows.  
 4. **Integrate:** Create checkout sessions, payment links, invoices, or subscriptions via **HTTP API** or **`@noderails/sdk`**.  
 5. **Operate:** Track authorization through capture, settlement, disputes, payouts, and **webhooks**.
+
+Where enabled, the same hosted checkout can offer **crypto wallet pay** and **Dodo card checkout** on one **checkout session** (payment links, invoices, and session URLs).
 
 Hosted checkout lives under `noderails/apps/payment-ui`; merchant tooling under `noderails/apps/dashboard` and `noderails/apps/admin`.
 
@@ -197,14 +199,20 @@ services/worker: BullMQ jobs (e.g. OTP email via SES)
 
 ## 8. Dodo Payments (card rail)
 
-NodeRails integrates **Dodo Payments** as an optional **fiat card** path alongside crypto escrow checkout.
+NodeRails treats **Dodo Payments** as a **strategic card partner**, not a bolt-on demo. Real merchants need **fiat card checkout** next to **crypto escrow** on the **same** payment links, invoices, and hosted UI — the same product story as “Stripe-shaped commerce + on-chain settlement,” with **Dodo** powering the card acquirer path we ship for **partner programs and ecosystem bounties**.
+
+**Why Dodo matters here**
+
+- **Unified checkout:** one **checkout session** can surface **Pay with wallet** (authorize → escrow → **MTXM** / **indexer** lifecycle) and **Pay with card** (Dodo-hosted) so shoppers and ops see a single NodeRails flow, not two disconnected products.
+- **Fiat ↔ crypto positioning:** session **fiat totals** drive the **Dodo `product_cart`**; the wallet rail still runs **authorize / capture** on the merchant’s enabled chain and tokens.
+- **Bounty-ready integration:** we implement the full server path reviewers expect — **`POST /checkouts`**, **`POST /webhooks/dodo`**, Standard Webhooks verification, and **`metadata`** (`noderails_checkout_session_id`, `noderails_app_id`) so Dodo events correlate back to NodeRails sessions and intents (grep-friendly in this repo, same pattern as **`/webhooks/mtxm`** and **`/webhooks/indexer`**).
 
 **How it works in this repo**
 
-1. **Payment UI** (`noderails/apps/payment-ui`): when `NEXT_PUBLIC_ENABLE_DODO_CARD=true`, the checkout shows **Pay with card**. The browser calls **`POST /checkout-sessions/public/:checkoutSessionId/dodo-session`** on **`noderails-server`** — never the Dodo secret key.
-2. **Server** (`noderails/services/noderails-server/src/modules/payments/dodo-payments.service.ts`, `dodo-payments.client.ts`): validates the NodeRails checkout session, maps the fiat total to Dodo’s **`product_cart`** (USD cents today — configure a **pay-what-you-want** / priced product in Dodo), sets **`metadata`** with `noderails_checkout_session_id`, and calls Dodo’s **`POST /checkouts`** (`Authorization: Bearer`, host `test.dodopayments.com` or `live.dodopayments.com`).
-3. **Return**: `{ checkoutUrl, dodoSessionId }` — the UI opens Dodo’s hosted page.
-4. **Webhooks**: configure Dodo → **`POST /webhooks/dodo`** with Standard Webhooks headers (`webhook-id`, `webhook-timestamp`, `webhook-signature`). Verification uses **`DODO_PAYMENTS_WEBHOOK_SECRET`**. Successful deliveries merge **`metadata.dodoWebhook`** on the **`CheckoutSession`** (and linked **`PaymentIntent`** when present). **This updates card-rail audit state only** — it does **not** authorize or capture on-chain escrow.
+1. **Payment UI** (`noderails/apps/payment-ui`): when `NEXT_PUBLIC_ENABLE_DODO_CARD=true`, checkout shows **Pay with card**. The browser calls **`POST /checkout-sessions/public/:checkoutSessionId/dodo-session`** on **`noderails-server`** — API keys stay server-side only.
+2. **Server** (`noderails/services/noderails-server/src/modules/payments/dodo-payments.service.ts`, `dodo-payments.client.ts`): validates the NodeRails checkout session, maps the fiat total to Dodo’s **`product_cart`** (USD cents today — configure a **pay-what-you-want** / priced product in the Dodo dashboard), sets **`metadata`** for correlation, and calls Dodo’s **`POST /checkouts`** (`Authorization: Bearer`, `test.dodopayments.com` or `live.dodopayments.com`).
+3. **Return**: `{ checkoutUrl, dodoSessionId }` — the UI opens Dodo’s hosted checkout.
+4. **Webhooks**: point Dodo at **`POST /webhooks/dodo`** (`webhook-id`, `webhook-timestamp`, `webhook-signature`; verified with **`DODO_PAYMENTS_WEBHOOK_SECRET`**). Deliveries merge **`metadata.dodoWebhook`** on **`CheckoutSession`** and linked **`PaymentIntent`** so **card completion** is visible in the same system of record as crypto — **on-chain escrow** remains the wallet rail’s authorize/capture path in the existing payment modules (dual-rail architecture).
 
 **Environment (names only)**
 
@@ -241,9 +249,9 @@ When **`FRAUD_ENGINE_URL`** is set, **`authorizeFromCheckoutSession`** (Solana p
 
 **Risk:** the **fraud engine** supplies **Solana wallet** assessments when the platform needs them (GoldRush-backed; see §9).
 
-**Card rail:** optional **Dodo Payments** hosted checkout for fiat cards is owned end-to-end by **`noderails-server`** + payment-ui (§8).
+**Dodo Payments:** fiat **card** completion on the **same checkout** as crypto — server sessions, hosted UX, and webhooks (§8); positioned for **ecosystem bounty** builds and **merchant fiat + crypto** in one product.
 
-**In short:** NodeRails is the **system of record**; **MTXM + Indexer** are the **execution and observation** layer we built; **WallCard** is **member signing with card UX**; the **fraud engine** is **orthogonal risk**; the **SDK** is the **typed API surface** for backends.
+**In short:** NodeRails is the **system of record**; **MTXM + Indexer** execute and observe on-chain steps; **Dodo** covers **card fiat** on unified checkout; **WallCard** is **member signing with card UX**; the **fraud engine** is **orthogonal risk**; the **SDK** is the **typed API surface** for backends.
 
 ---
 
