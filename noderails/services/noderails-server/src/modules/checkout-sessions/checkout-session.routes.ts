@@ -11,9 +11,13 @@ import {
   success,
   created,
   paginated,
+  createLogger,
 } from '@noderails/service-base';
 import * as checkoutService from './checkout-session.service.js';
+import * as dodoPaymentsService from '../payments/dodo-payments.service.js';
 import { env } from '../../config.js';
+
+const dodoLogger = createLogger('dodo-payments');
 
 const router: express.Router = Router();
 
@@ -25,6 +29,23 @@ router.get(
   asyncHandler(async (req, res) => {
     const session = await checkoutService.getCheckoutSessionForPayment(req.params.id);
     success(res, session);
+  }),
+);
+
+/**
+ * POST /checkout-sessions/public/:id/dodo-session
+ * Creates a real Dodo Payments hosted checkout session (card rail). Requires server env:
+ * `DODO_PAYMENTS_ENABLED=true`, `DODO_PAYMENTS_API_KEY`, `DODO_PAYMENTS_PRODUCT_ID`.
+ * Webhooks: `POST /webhooks/dodo` with Standard Webhooks headers.
+ */
+router.post(
+  '/public/:id/dodo-session',
+  asyncHandler(async (req, res) => {
+    const result = await dodoPaymentsService.createDodoCheckoutForPublicSession({
+      checkoutSessionId: req.params.id,
+      logger: dodoLogger,
+    });
+    success(res, result);
   }),
 );
 

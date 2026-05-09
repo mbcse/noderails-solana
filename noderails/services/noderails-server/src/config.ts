@@ -69,6 +69,26 @@ export const env = {
     ?? (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3001'),
   PAYMENT_UI_URL: process.env.PAYMENT_UI_URL || 'http://localhost:3002',
 
+  // ── Dodo Payments (card rail — server-side checkout session + webhooks) ──
+  /** When true and API credentials are set, `POST /checkout-sessions/public/:id/dodo-session` creates real Dodo checkout sessions. */
+  DODO_PAYMENTS_ENABLED: process.env.DODO_PAYMENTS_ENABLED === 'true',
+  DODO_PAYMENTS_API_KEY: process.env.DODO_PAYMENTS_API_KEY ?? '',
+  /** Standard Webhooks secret from Dodo dashboard (`Developer > Webhooks`). Supports optional `whsec_` prefix. */
+  DODO_PAYMENTS_WEBHOOK_SECRET: process.env.DODO_PAYMENTS_WEBHOOK_SECRET ?? '',
+  /** API host including trailing path segment omitted — e.g. `https://test.dodopayments.com` or `https://live.dodopayments.com` */
+  DODO_PAYMENTS_BASE_URL:
+    process.env.DODO_PAYMENTS_BASE_URL?.replace(/\/+$/, '') ?? 'https://test.dodopayments.com',
+  /** Dodo product id from dashboard — typically a pay-what-you-want / priced product for fiat card checkout */
+  DODO_PAYMENTS_PRODUCT_ID: process.env.DODO_PAYMENTS_PRODUCT_ID ?? '',
+  /** Base URL for building return/cancel URLs when session URLs are empty (e.g. `http://localhost:3002`) */
+  PAYMENT_UI_PUBLIC_URL: process.env.PAYMENT_UI_PUBLIC_URL ?? process.env.PAYMENT_UI_URL ?? 'http://localhost:3002',
+
+  // ── Fraud engine (Solana wallet screening via GoldRush — separate service) ──
+  /** Base URL of `noderails-fraud-engine`, e.g. `http://localhost:7099` */
+  FRAUD_ENGINE_URL: process.env.FRAUD_ENGINE_URL?.replace(/\/+$/, '') ?? '',
+  /** Bearer token sent to the fraud engine (must match `FRAUD_ENGINE_API_TOKEN` configured on that service). */
+  FRAUD_ENGINE_CLIENT_TOKEN: process.env.FRAUD_ENGINE_CLIENT_TOKEN ?? '',
+
   // ── CryptoCompare ──
   CRYPTOCOMPARE_API_KEY: process.env.CRYPTOCOMPARE_API_KEY ?? '',
 

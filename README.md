@@ -56,7 +56,8 @@ The **Visa lesson** was **interoperability and habit**; the **NodeRails answer**
 | **NodeRails SDK** | Server-side TypeScript client for creating and managing payment objects against the platform API. | Integrators (Node, Deno, Bun) |
 | **WallCard** | **Wallet-as-card**: PAN/CVV/PIN/OTP-style approvals and `provider.request`-compatible signing so partners get a familiar integration surface without training every user as a wallet power user. Under the hood, members hold **EVM and Solana** wallet material governed by policy. | End users, issuers, programmes |
 | **NodeRails Card Network** | Network-style **rails and roles** around programmable settlement: shared habits, APIs, and operating practice. **WallCard** is how that layer meets people and embedded commerce. | Programmes, partners, sponsors |
-| **Fraud engine** | HTTP API that scores **Solana wallet addresses** (base58) using third-party foundational data; used **before** high-risk platform actions. | Risk, compliance, treasury |
+| **Fraud engine** | HTTP API that scores **Solana wallet addresses** (base58) using **Covalent GoldRush** foundational APIs; NodeRails stores a snapshot on **`PaymentIntent.metadata`** during Solana authorization when configured. | Risk, compliance, treasury |
+| **Dodo Payments** | Optional **card** rail: **`noderails-server`** creates **Dodo checkout sessions**; **`/webhooks/dodo`** updates **card audit metadata** only (does not capture on-chain escrow). | Card payers alongside crypto checkout |
 | **MTXM** | **Multichain Transaction Manager**: async **sign → broadcast → confirm** with webhooks. NodeRails submits and tracks many on-chain steps (EVM calldata and **Solana** instructions) through one lifecycle model. | Platform backend |
 | **NodeRails Indexer** | **Multi-chain indexer**: registered contracts/programs, event logs, watched native transfers, HMAC webhooks; **observes** on-chain emissions for reconciliation and confirmation alongside MTXM. | Platform backend |
 
@@ -145,6 +146,10 @@ NodeRails consumes **MTXM webhooks** (`/webhooks/mtxm`) so **PaymentIntent** and
 | **MTXM** | Submit the signed work and track it through **finality**. |
 | **Indexer** | Observe **events and transfers** for registered programmes/contracts and notify the app. |
 
+### Chain intelligence (GoldRush / Covalent)
+
+Beyond raw submission and event pipes, **operations and reconciliation** treat **Covalent GoldRush** as part of the **chain-intelligence layer** that informs how we interpret MTXM confirmations and indexer-derived evidence (supply/holder context, historical activity, pricing overlays where applicable). **MTXM** and **NodeRails Indexer** remain our **first-party execution and observation** products; GoldRush data feeds adjacent risk and diligence workflows rather than replacing those components.
+
 ---
 
 ## 7. WallCard and the NodeRails Card Network
@@ -190,19 +195,43 @@ services/worker: BullMQ jobs (e.g. OTP email via SES)
 
 ---
 
-## 8. Fraud engine: wallet screening
+## 8. Dodo Payments (card rail)
 
-The **fraud engine** exposes a JSON HTTP API (e.g. `GET /v1/solana/wallets/{address}/assessment`) returning **score**, **tier**, and **findings** using **GoldRush Foundational** data. Responses carry `X-Service-Id: noderails-fraud-engine`.
+NodeRails integrates **Dodo Payments** as an optional **fiat card** path alongside crypto escrow checkout.
 
-**Deployment pattern**
+**How it works in this repo**
 
-1. Run `noderails-fraud-engine` as its own process; keep **`GOLDRUSH_API_KEY`** only on that host.  
-2. NodeRails calls it with `FRAUD_ENGINE_URL` and optional **`FRAUD_ENGINE_CLIENT_TOKEN`** (server-side only).  
-3. Use assessments **before** elevated-risk actions (treasury, limits, sensitive settlements).
+1. **Payment UI** (`noderails/apps/payment-ui`): when `NEXT_PUBLIC_ENABLE_DODO_CARD=true`, the checkout shows **Pay with card**. The browser calls **`POST /checkout-sessions/public/:checkoutSessionId/dodo-session`** on **`noderails-server`** — never the Dodo secret key.
+2. **Server** (`noderails/services/noderails-server/src/modules/payments/dodo-payments.service.ts`, `dodo-payments.client.ts`): validates the NodeRails checkout session, maps the fiat total to Dodo’s **`product_cart`** (USD cents today — configure a **pay-what-you-want** / priced product in Dodo), sets **`metadata`** with `noderails_checkout_session_id`, and calls Dodo’s **`POST /checkouts`** (`Authorization: Bearer`, host `test.dodopayments.com` or `live.dodopayments.com`).
+3. **Return**: `{ checkoutUrl, dodoSessionId }` — the UI opens Dodo’s hosted page.
+4. **Webhooks**: configure Dodo → **`POST /webhooks/dodo`** with Standard Webhooks headers (`webhook-id`, `webhook-timestamp`, `webhook-signature`). Verification uses **`DODO_PAYMENTS_WEBHOOK_SECRET`**. Successful deliveries merge **`metadata.dodoWebhook`** on the **`CheckoutSession`** (and linked **`PaymentIntent`** when present). **This updates card-rail audit state only** — it does **not** authorize or capture on-chain escrow.
+
+**Environment (names only)**
+
+- `DODO_PAYMENTS_ENABLED`, `DODO_PAYMENTS_API_KEY`, `DODO_PAYMENTS_WEBHOOK_SECRET`, `DODO_PAYMENTS_BASE_URL`, `DODO_PAYMENTS_PRODUCT_ID`, `PAYMENT_UI_PUBLIC_URL`
+- Browser flag: `NEXT_PUBLIC_ENABLE_DODO_CARD`
 
 ---
 
-## 9. How the pieces fit
+## 9. Fraud engine & Covalent GoldRush
+
+The **`noderails-fraud-engine`** service scores **Solana** wallets using **GoldRush Foundational** REST APIs against **`https://api.covalenthq.com`** (`GoldRushClient` in [`noderails-fraud-engine/src/goldrush/client.ts`](noderails-fraud-engine/src/goldrush/client.ts)). It merges **balances**, **transactions_v3** (including optional pagination via `links.next` in [`assess.ts`](noderails-fraud-engine/src/assess.ts)), and **transaction summaries**, then applies deterministic rules in [`risk-engine.ts`](noderails-fraud-engine/src/engine/risk-engine.ts).
+
+**HTTP API** (`noderails-fraud-engine/src/server.ts`): e.g. **`GET /v1/solana/wallets/{address}/assessment`** returns a **`ComplianceReport`** with score, tier, and findings. Responses carry **`X-Service-Id: noderails-fraud-engine`**. **`GET /v1/status`** lists capability flags.
+
+**NodeRails wiring**
+
+When **`FRAUD_ENGINE_URL`** is set, **`authorizeFromCheckoutSession`** (Solana payer, [`authorize.service.ts`](noderails/services/noderails-server/src/modules/payments/authorize.service.ts)) calls the fraud engine via [`fraud-engine.client.ts`](noderails/services/noderails-server/src/modules/risk/fraud-engine.client.ts) and stores **`fraudTier`**, **`fraudScore`**, **`fraudFetchedAt`**, **`fraudFindingCount`** on **`PaymentIntent.metadata`**. Failures are **non-blocking** (logged).
+
+**Deployment pattern**
+
+1. Run `noderails-fraud-engine`; keep **`GOLDRUSH_API_KEY`** only on that host.  
+2. Configure **`FRAUD_ENGINE_API_TOKEN`** on the fraud engine and **`FRAUD_ENGINE_CLIENT_TOKEN`** on NodeRails (same value).  
+3. Tune thresholds in **`risk-engine.ts`** for your risk posture.
+
+---
+
+## 10. How the pieces fit
 
 **Commerce:** merchants integrate via **`@noderails/sdk`** and the **NodeRails API**; customers use **hosted checkout / payment UI**.
 
@@ -210,13 +239,15 @@ The **fraud engine** exposes a JSON HTTP API (e.g. `GET /v1/solana/wallets/{addr
 
 **WallCard:** member apps use the **card network API** and isolated **signer-host** for policy-gated signatures.
 
-**Risk:** the **fraud engine** supplies **Solana wallet** assessments when the platform needs them.
+**Risk:** the **fraud engine** supplies **Solana wallet** assessments when the platform needs them (GoldRush-backed; see §9).
+
+**Card rail:** optional **Dodo Payments** hosted checkout for fiat cards is owned end-to-end by **`noderails-server`** + payment-ui (§8).
 
 **In short:** NodeRails is the **system of record**; **MTXM + Indexer** are the **execution and observation** layer we built; **WallCard** is **member signing with card UX**; the **fraud engine** is **orthogonal risk**; the **SDK** is the **typed API surface** for backends.
 
 ---
 
-## 10. Where to look in `noderails/`
+## 11. Where to look in `noderails/`
 
 Standalone `.md` files were mostly stripped from this snapshot; use **code and landing** as the map:
 
@@ -228,18 +259,21 @@ Standalone `.md` files were mostly stripped from this snapshot; use **code and l
 | Solana programs + IDL | `noderails/noderails-solana/programs/`, `noderails/noderails-solana/target/idl/*.json` |
 | Solana TS helpers | `noderails/packages/solana/` |
 | MTXM / indexer clients | `noderails/packages/mtxm-client/`, `noderails/packages/indexer-client/` |
-| Webhook ingest & workers | `noderails/services/noderails-server/` |
-| Server modules | `noderails/services/noderails-server/src/` |
+| Webhook ingest (`/webhooks/mtxm`, `/webhooks/indexer`, `/webhooks/dodo`) | `noderails/services/noderails-server/src/modules/payments/` |
+| Dodo card rail | `.../dodo-payments.service.ts`, `.../dodo-payments.client.ts`, `.../dodo-webhook-verify.ts` |
+| Fraud engine HTTP client (platform) | `.../risk/fraud-engine.client.ts` |
+| Fraud engine service | `noderails-fraud-engine/src/` |
+| Other server modules | `noderails/services/noderails-server/src/` |
 
 ---
 
-## 11. Vision
+## 12. Vision
 
 NodeRails exists so teams can **accept crypto** with **gateway-grade checkout**, **escrow and timelocks**, **disputes**, **risk hooks**, and **signing that real people can complete** (**WallCard**). We combine merchant rails with **operator-owned** transaction and indexing infrastructure (**MTXM**, **Indexer**) instead of bolting every chain into a single fragile script.
 
 ---
 
-## 12. Contact
+## 13. Contact
 
 - **This repository / more detail:** [mbcse50@gmail.com](mailto:mbcse50@gmail.com)  
 - **Business / programmes:** business@noderails.com (see live site).  

@@ -87,6 +87,14 @@ export async function handleRequest(
         chain_name: config.chainName,
         quote_currency: config.quoteCurrency,
         goldrush_configured: Boolean(config.goldrushApiKey),
+        goldrush_api_host: 'https://api.covalenthq.com',
+        capabilities: [
+          'solana_wallet_assessment',
+          'goldrush_balances_v2',
+          'goldrush_transactions_v3',
+          'goldrush_transactions_summary',
+          'goldrush_recent_tx_pagination_merge',
+        ],
       });
       return;
     }

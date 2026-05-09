@@ -450,7 +450,7 @@ export function PaymentLinkCheckout({ link }: { link: PaymentLinkData }) {
             </div>
           )}
 
-          <DodoPaymentsDemoPanel />
+          <DodoPaymentsDemoPanel checkoutSessionId={link.checkoutSessionId} />
 
           {/* Step Progress */}
           {step !== 'select' && step !== 'customer-info' && (

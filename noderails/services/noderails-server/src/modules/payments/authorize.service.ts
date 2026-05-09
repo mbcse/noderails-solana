@@ -47,6 +47,7 @@ import { getEffectiveFeeBps } from './fee-config.service.js';
 import { enqueueAppWebhook } from '../webhooks/webhook.service.js';
 import { mtxmSolanaAuthority, solanaRpcForChain } from './solana-escrow-tx.js';
 import { submitSolanaSplCaptureMtxm } from './solana-spl-capture.js';
+import { fetchSolanaWalletFraudSnapshot } from '../risk/fraud-engine.client.js';
 
 const mtxm = new MtxmClient({
   baseUrl: env.MTXM_BASE_URL,
@@ -298,6 +299,23 @@ export async function authorizeFromCheckoutSession(
     }
   }
 
+  // ── 7b. Optional Solana wallet screening (GoldRush-backed fraud engine) ──
+  const fraudMeta: Record<string, string | number> = {};
+  if (chain.chainType === 'SOLANA' && env.FRAUD_ENGINE_URL.trim() && isValidSolanaAddress(input.walletAddress)) {
+    const snap = await fetchSolanaWalletFraudSnapshot({
+      baseUrl: env.FRAUD_ENGINE_URL,
+      bearerToken: env.FRAUD_ENGINE_CLIENT_TOKEN,
+      walletAddress: input.walletAddress.trim(),
+      logger,
+    });
+    if (snap) {
+      fraudMeta.fraudTier = snap.fraudTier;
+      fraudMeta.fraudScore = snap.fraudScore;
+      fraudMeta.fraudFetchedAt = snap.fraudFetchedAt;
+      fraudMeta.fraudFindingCount = snap.fraudFindingCount;
+    }
+  }
+
   // ── 8. Create payment intent ──
   const timelockConfig = await getEffectiveTimelockConfig(session.app.merchantId);
   const feeBps = await getEffectiveFeeBps(session.app.merchantId);
@@ -334,6 +352,7 @@ export async function authorizeFromCheckoutSession(
       exchangeRate: input.exchangeRate,
       platformFeeBps: feeBps,
       status: 'AUTHORIZED',
+      metadata: fraudMeta as object,
     },
   });
 
