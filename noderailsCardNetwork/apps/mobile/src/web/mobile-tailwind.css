@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+/* Paths are relative to this file (`apps/mobile/src/web/`), so they survive pnpm+Vercel. */
+@source "../../**/*.{tsx,ts,jsx,js}";
+@source "../../../../packages/ui/src/**/*.{tsx,ts,jsx,js}";
+
+@import "@noderails-card/ui/theme.css";

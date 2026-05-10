@@ -1,0 +1,60 @@
+:root {
+  --color-canvas:        #ffffff;
+  --color-canvas-subtle: #fafafa;
+  --color-canvas-muted:  #f4f4f5;
+  --color-surface:          #ffffff;
+  --color-surface-elevated: #ffffff;
+  --color-ink:        #09090b;
+  --color-ink-muted:  #52525b;
+  --color-ink-subtle: #71717a;
+  --color-line:       #e4e4e7;
+  --color-line-strong:#d4d4d8;
+  --color-line-soft:  #f4f4f5;
+  --color-brand:      #6366f1;
+  --color-brand-hover:#4f46e5;
+  --color-brand-soft: #eef2ff;
+  --color-brand-ink:  #312e81;
+  --color-inverse-fill: #09090b;
+  --color-inverse-fg:   #ffffff;
+  --color-success:      #10b981;
+  --color-success-soft: #ecfdf5;
+  --color-warning:      #f59e0b;
+  --color-warning-soft: #fffbeb;
+  --color-danger:       #ef4444;
+  --color-danger-soft:  #fef2f2;
+  --shadow-card:    0 1px 2px rgb(9 9 11 / 0.04), 0 4px 12px rgb(9 9 11 / 0.04);
+  --shadow-card-lg: 0 4px 12px rgb(9 9 11 / 0.04), 0 24px 48px -12px rgb(9 9 11 / 0.12);
+  --shadow-glow:    0 0 0 1px rgb(99 102 241 / 0.16), 0 12px 32px -8px rgb(99 102 241 / 0.32);
+}
+@layer base {
+  html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  body { font-feature-settings: "ss01", "cv11"; }
+}
+@keyframes nrc-fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.nrc-fade-up { animation: nrc-fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes nrc-pulse-ring {
+  0%   { transform: scale(0.8); opacity: 0.6; }
+  100% { transform: scale(2);   opacity: 0; }
+}
+.nrc-pulse-ring { animation: nrc-pulse-ring 1.6s ease-out infinite; }
+
+/* Embedded signing iframe: tighter chrome, no page-grade chrome bleed */
+body[data-nrc-wallet-embed="iframe"] .wallet-bg-decor {
+  display: none;
+}
+body[data-nrc-wallet-embed="iframe"] .wallet-shell {
+  min-height: auto;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+@media (min-width: 640px) {
+  body[data-nrc-wallet-embed="iframe"] .wallet-shell {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+}
