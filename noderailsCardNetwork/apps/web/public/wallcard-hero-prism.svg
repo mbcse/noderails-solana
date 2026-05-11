@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1136" viewBox="0 0 800 1136" fill="none" aria-hidden="true">
+  <defs>
+    <linearGradient id="prismStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="45%" stop-color="#FF2E93" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#14F195" stop-opacity="0.28"/>
+    </linearGradient>
+    <radialGradient id="prismGlow" cx="72%" cy="18%" r="55%">
+      <stop offset="0%" stop-color="#FF6B35" stop-opacity="0.35"/>
+      <stop offset="55%" stop-color="#7C3AED" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="1136" fill="url(#prismGlow)"/>
+  <g stroke="url(#prismStroke)" stroke-width="1.15" opacity="0.9">
+    <path d="M-40 180 L840 40"/>
+    <path d="M-20 320 L820 120"/>
+    <path d="M0 460 L800 220"/>
+    <path d="M40 600 L780 360"/>
+    <path d="M80 740 L740 500"/>
+    <path d="M120 880 L700 640"/>
+    <path d="M160 1020 L660 780"/>
+    <path d="M200 1160 L620 920"/>
+    <path d="M380 -40 L520 1180"/>
+    <path d="M520 -20 L680 1160"/>
+    <path d="M660 0 L840 1140"/>
+    <path d="M120 -20 L280 1160"/>
+    <path d="M260 0 L420 1140"/>
+  </g>
+  <circle cx="620" cy="280" r="140" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <circle cx="620" cy="280" r="220" stroke="rgba(20,241,149,0.12)" stroke-width="1"/>
+</svg>
